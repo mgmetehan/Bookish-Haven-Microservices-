@@ -2,6 +2,8 @@ package com.mgmetehan.bookservice.service.impl;
 
 import com.mgmetehan.bookservice.converter.BookDtoConverter;
 import com.mgmetehan.bookservice.dto.BookDto;
+import com.mgmetehan.bookservice.dto.BookIdDto;
+import com.mgmetehan.bookservice.exception.BookNotFoundException;
 import com.mgmetehan.bookservice.model.Book;
 import com.mgmetehan.bookservice.respository.BookRepository;
 import com.mgmetehan.bookservice.service.BookService;
@@ -20,20 +22,23 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getAllBooks() {
-    /*    List<Book> books = repository.findAll();
-        List<BookDto> bookDtos = new ArrayList<>();
-
-        for (Book book : books) {
-            BookDto bookDto = BookDtoConverter.convert(book);
-            bookDtos.add(bookDto);
-        }
-
-        return bookDtos;*/
-
         return repository.findAll()
                 .stream()
                 .map(BookDtoConverter::convert)
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public BookIdDto findByIsbn(String isbn) {
+        return repository.findByIsbn(isbn)
+                .map(book -> new BookIdDto(book.getId(), book.getIsbn()))
+                .orElseThrow(() -> new BookNotFoundException("Book could not found by isbn: " + isbn));
+    }
+
+    @Override
+    public BookDto findBookDetailsById(String id) {
+        return repository.findById(id)
+                .map(BookDtoConverter::convert)
+                .orElseThrow(() -> new BookNotFoundException("Book could not found by id:" + id));
+    }
 }
