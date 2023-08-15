@@ -4,6 +4,7 @@ import com.mgmetehan.libraryservice.dto.LibraryDto;
 import com.mgmetehan.libraryservice.service.LibraryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,15 @@ import java.util.List;
 @Slf4j
 public class LibraryController {
     private final LibraryService libraryService;
+    private final Environment environment;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LibraryDto> getLibraryById(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(libraryService.getAllBooksInLibraryById(id));
+    }
+
+
+
 
     @GetMapping
     public ResponseEntity<List<String>> getAllLibraries() {
@@ -30,11 +40,6 @@ public class LibraryController {
     public ResponseEntity<LibraryDto> createLibrary() {
        // log.info("Library created on port number " + environment.getProperty("local.server.port"));
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(libraryService.createLibrary());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<LibraryDto> getLibraryById(@PathVariable String id) {
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(libraryService.getAllBooksInLibraryById());
     }
 
 }
