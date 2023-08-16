@@ -18,5 +18,5 @@ import java.util.List;
 @Builder
 public class LibraryDto {
     private String id;
-    private List<BookDto> userBook = new ArrayList<>();
+    private List<BookDto> userBook = List.of();
 }

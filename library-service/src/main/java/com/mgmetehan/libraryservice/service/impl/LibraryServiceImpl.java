@@ -1,6 +1,7 @@
 package com.mgmetehan.libraryservice.service.impl;
 
 import com.mgmetehan.libraryservice.client.BookServiceClient;
+import com.mgmetehan.libraryservice.dto.AddBookRequest;
 import com.mgmetehan.libraryservice.dto.BookDto;
 import com.mgmetehan.libraryservice.dto.LibraryDto;
 import com.mgmetehan.libraryservice.exception.LibraryNotFoundException;
@@ -33,6 +34,19 @@ public class LibraryServiceImpl implements LibraryService {
         return LibraryDto.builder()
                 .id(newLibrary.getId())
                 .build();
+    }
+
+    @Override
+    public void addBookToLibrary(AddBookRequest request) {
+        String bookId = bookServiceClient.getBookByIsbn(request.getIsbn()).getBody().getBookId();
+
+        Library library = repository.findById(request.getId())
+                .orElseThrow(() -> new LibraryNotFoundException("Library could not found by id: " + request.getId()));
+
+        library.getUserBook()
+                .add(bookId);
+
+        repository.save(library);
     }
 
     @Override

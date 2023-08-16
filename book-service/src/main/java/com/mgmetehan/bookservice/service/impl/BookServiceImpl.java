@@ -30,7 +30,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookIdDto findByIsbn(String isbn) {
-        return repository.findByIsbn(isbn)
+        return repository.getBookByIsbn(isbn)
                 .map(book -> new BookIdDto(book.getId(), book.getIsbn()))
                 .orElseThrow(() -> new BookNotFoundException("Book could not found by isbn: " + isbn));
     }

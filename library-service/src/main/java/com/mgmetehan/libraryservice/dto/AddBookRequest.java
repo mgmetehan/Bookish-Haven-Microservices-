@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateBookRequest {
+public class AddBookRequest {
     private String id;
     private String isbn;
 
