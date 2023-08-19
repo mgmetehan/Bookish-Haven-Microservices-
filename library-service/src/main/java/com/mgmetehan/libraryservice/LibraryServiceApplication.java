@@ -16,7 +16,9 @@ public class LibraryServiceApplication {
 		SpringApplication.run(LibraryServiceApplication.class, args);
 	}
 
-	//Feign Client Error Handling
+/*
+// !!! Ayni anda hem error decoder hem de @CircleBreaker calismiyor.
+//Feign Client Error Handling
 	@Bean
 	public ErrorDecoder errorDecoder() {
 		return new RetreiveMessageErrorDecoder();
@@ -25,5 +27,5 @@ public class LibraryServiceApplication {
 	@Bean
 	Logger.Level feignLoggerLevel() {
 		return Logger.Level.FULL;
-	}
+	}*/
 }

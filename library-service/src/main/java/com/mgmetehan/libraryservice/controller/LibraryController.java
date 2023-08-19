@@ -44,7 +44,6 @@ public class LibraryController {
 
     @GetMapping
     public ResponseEntity<List<String>> getAllLibraries() {
-        System.out.println(bookServiceClient.getAllBook());
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(libraryService.getAllLibraries());
     }
 
